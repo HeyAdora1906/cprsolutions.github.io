@@ -12,6 +12,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 
 import handler from "./dist/server/server.js";
 import { chatResponse } from "./src/server-chat";
+import { contactResponse } from "./src/server-contact";
 
 const fetchHandler = handler as {
   fetch: (request: Request) => Response | Promise<Response>;
@@ -48,9 +49,12 @@ export default async function vercelHandler(
 ): Promise<void> {
   try {
     const webRequest = toWebRequest(req);
-    const webRes = new URL(webRequest.url).pathname === "/api/chat"
+    const pathname = new URL(webRequest.url).pathname;
+    const webRes = pathname === "/api/chat"
       ? await chatResponse(webRequest)
-      : await fetchHandler.fetch(webRequest);
+      : pathname === "/api/contact"
+        ? await contactResponse(webRequest)
+        : await fetchHandler.fetch(webRequest);
     res.statusCode = webRes.status;
     webRes.headers.forEach((value, key) => res.setHeader(key, value));
     for (const [key, value] of Object.entries(securityHeaders)) res.setHeader(key, value);
