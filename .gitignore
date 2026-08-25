@@ -1,0 +1,49 @@
+# Dependencies and package-manager caches
+node_modules/
+.pnpm-store/
+.yarn/
+.cache/
+
+# Local environment files and credentials (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.crt
+
+# Generated build/deployment output
+dist/
+dist-ssr/
+.vercel/
+.output/
+.nitro/
+.tanstack/
+
+# Local runtime state
+.run/
+*.log
+
+# Coverage, test output, and browser QA artifacts
+coverage/
+playwright-report/
+test-results/
+artifacts/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.mp4
+*.webm
+*.mov
+*.avi
+*.har
+*.trace.zip
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
