@@ -4,6 +4,7 @@
 // rest. Run `bun run build` before starting. Restart it with `bun run publish`.
 import handler from "./dist/server/server.js";
 import { chatResponse } from "./src/server-chat";
+import { contactResponse } from "./src/server-contact";
 
 const PORT = 3000;
 const HOST = "0.0.0.0";
@@ -36,6 +37,7 @@ for (let attempt = 1; ; attempt++) {
       async fetch(req) {
         const { pathname } = new URL(req.url);
         if (pathname === "/api/chat") return withSecurityHeaders(await chatResponse(req));
+        if (pathname === "/api/contact") return withSecurityHeaders(await contactResponse(req));
         if (pathname !== "/") {
           const file = Bun.file(CLIENT_DIR + pathname);
           if (await file.exists()) return withSecurityHeaders(new Response(file));

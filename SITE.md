@@ -77,3 +77,14 @@ preview and the live site.
 ## First-visit language behavior
 
 The site selects Spanish on a first visit when the browser's preferred locale is Spanish (`es`/`es-*`) or includes one of the configured Spanish-first regions (Spanish-speaking Latin America and Spain). It defaults to English for non-Spanish or ambiguous locales, including `en-US`, `en-CA`, `fr-CA`, and other Europe/North America locales. This is a privacy-preserving browser-locale proxy for country, not true country detection; no geo-IP service is used. A visitor's ES/EN choice is stored locally under the `cpr-language` key and takes precedence on later visits until changed manually.
+
+## Diagnostic contact delivery
+
+The `/contact` form posts to the server-side `POST /api/contact` endpoint. The endpoint validates the submitted name, email, optional company, message, selected language, consent, and honeypot field, while retaining the per-IP request limit and no-store response behavior.
+
+Email delivery uses these server/runtime environment variables:
+
+- `RESEND_API_KEY` — required to enable the Resend email request. Keep it server-side; never expose it in client variables, source, backups, or logs.
+- `RESEND_FROM_EMAIL` — optional verified sender value for Resend. When unset, the endpoint uses `CPR Solutions <onboarding@resend.dev>` as the Resend fallback sender.
+
+Configured submissions are sent to `soporteweb@cprsas.com`, with the submitter's email as `reply_to`. If `RESEND_API_KEY` is unset, the endpoint returns `503` with `{ "status": "not_configured" }`; the client displays an honest non-sending message and does not claim that an email was sent. Resend failures return a generic retryable error. Honeypot submissions receive a benign success-shaped response without sending an email.
