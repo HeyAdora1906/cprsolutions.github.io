@@ -27,7 +27,8 @@ const securityHeaders = {
 
 const toWebRequest = (req: IncomingMessage): Request => {
   const host = req.headers.host ?? "localhost";
-  const proto = (req.headers["x-forwarded-proto"] as string | undefined) ?? "https";
+  const proto =
+    (req.headers["x-forwarded-proto"] as string | undefined) ?? "https";
   const url = `${proto}://${host}${req.url ?? "/"}`;
   const headers = new Headers();
   for (const [key, value] of Object.entries(req.headers)) {
@@ -39,25 +40,29 @@ const toWebRequest = (req: IncomingMessage): Request => {
   return new Request(url, {
     method,
     headers,
-    ...(hasBody ? { body: req as unknown as ReadableStream, duplex: "half" } : {}),
+    ...(hasBody
+      ? { body: req as unknown as ReadableStream, duplex: "half" }
+      : {}),
   } as RequestInit);
 };
 
 export default async function vercelHandler(
   req: IncomingMessage,
-  res: ServerResponse
+  res: ServerResponse,
 ): Promise<void> {
   try {
     const webRequest = toWebRequest(req);
     const pathname = new URL(webRequest.url).pathname;
-    const webRes = pathname === "/api/chat"
-      ? await chatResponse(webRequest)
-      : pathname === "/api/contact"
-        ? await contactResponse(webRequest)
-        : await fetchHandler.fetch(webRequest);
+    const webRes =
+      pathname === "/api/chat"
+        ? await chatResponse(webRequest)
+        : pathname === "/api/contact"
+          ? await contactResponse(webRequest)
+          : await fetchHandler.fetch(webRequest);
     res.statusCode = webRes.status;
     webRes.headers.forEach((value, key) => res.setHeader(key, value));
-    for (const [key, value] of Object.entries(securityHeaders)) res.setHeader(key, value);
+    for (const [key, value] of Object.entries(securityHeaders))
+      res.setHeader(key, value);
     if (webRes.body) {
       const reader = webRes.body.getReader();
       for (;;) {
