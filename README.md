@@ -62,6 +62,7 @@ On first visit, Spanish is selected for Spanish browser locales and defined Span
 Review `SITE.md`, `AI-ASSISTANT-SETUP.md`, and the deployment scripts before publishing. The deployment host must provide the required runtime secrets through its secret manager. Do not add `.env` files or credential material to this repository. The current application is an MVP/demo deployment: no HA/SLA is established, and contact submission remains intentionally disabled pending an approved production integration.
 
 ### Deploying on Vercel (Git integration — recommended)
+
 This repository deploys to Vercel through its Git integration with **no manual framework, build-command, or root-directory configuration**. A root `vercel.json` pins the real pipeline:
 
 \`\`\`json
@@ -71,9 +72,11 @@ This repository deploys to Vercel through its Git integration with **no manual f
 `build-vercel.sh` produces a Build Output API v3 bundle under `.vercel/output` (static client assets plus the serverless `render` function that runs `vercel-entry.ts` — this is what serves pages and the `/api/contact` and `/api/chat` endpoints). Vercel consumes that output automatically, so there is no `outputDirectory` override.
 
 To deploy:
+
 1. Add this repository to Vercel (Import Project → connect `HeyAdora1906/cprsolutions.github.io`). Use project type **Other** if prompted; the root `vercel.json` supplies the build command, and root directory stays the repo root.
 2. In the Vercel project's **Settings → Environment Variables**, add the runtime secrets the site needs (names only here — never commit values): `OPENAI_API_KEY` for live Sam responses, and `RESEND_API_KEY` / `RESEND_FROM_EMAIL` when enabling contact-form email delivery (recipient `soporteweb@cprsas.com`, sender must be verified in Resend).
 3. Push to `main` (or open a preview from any branch) and Vercel builds and deploys automatically from `build-vercel.sh`.
 
 ### Alternative: manual deploy with a token
+
 `go-live.sh` remains available as a manual/token-driven path: it runs `build-vercel.sh`, deploys with `bunx vercel deploy --prebuilt`, and requires `VERCEL_TOKEN` (collected from the owner) plus optional `DATABASE_URL`, `VERCEL_SCOPE`, and `VERCEL_TEAM_ID`. Prefer the Git integration above for routine deploys.

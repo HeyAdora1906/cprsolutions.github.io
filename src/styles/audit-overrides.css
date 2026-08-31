@@ -9,56 +9,183 @@
 }
 
 /* Consistent reading measure and surface language across routes. */
-body { background: var(--bg); }
-.site-header, .hero-copy, .hero-clients, footer,
-.contact-header, .contact-page-main { width: min(var(--content-max), calc(100% - (var(--page-gutter) * 2))); }
-.site-header { position: sticky; top: 0; padding: 22px 0; background: color-mix(in srgb, var(--hero) 76%, transparent); backdrop-filter: blur(16px) saturate(1.15); -webkit-backdrop-filter: blur(16px) saturate(1.15); }
-.contact-header { background: color-mix(in srgb, var(--bg) 82%, transparent); }
+body {
+  background: var(--bg);
+}
+.site-header,
+.hero-copy,
+.hero-clients,
+footer,
+.contact-header,
+.contact-page-main {
+  width: min(var(--content-max), calc(100% - (var(--page-gutter) * 2)));
+}
+.site-header {
+  position: sticky;
+  top: 0;
+  padding: 22px 0;
+  background: color-mix(in srgb, var(--hero) 76%, transparent);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+}
+.contact-header {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+}
 
 /* Keyboard access is visible without changing the restrained visual system. */
-:where(a, button, input, textarea, summary):focus-visible { outline: none; box-shadow: var(--focus-ring); }
-.language button:focus-visible { border-radius: 3px; }
-.button, .header-cta, .theme-toggle, .chat-form button { border-radius: var(--radius-sm); }
-.button-primary, .chat-form button { box-shadow: 0 8px 20px color-mix(in srgb, var(--ink) 14%, transparent); }
-.button-primary:hover, .header-cta:hover, .chat-form button:hover:not(:disabled) { box-shadow: 0 12px 26px color-mix(in srgb, var(--ink) 18%, transparent); }
+:where(a, button, input, textarea, summary):focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.language button:focus-visible {
+  border-radius: 3px;
+}
+.button,
+.header-cta,
+.theme-toggle,
+.chat-form button {
+  border-radius: var(--radius-sm);
+}
+.button-primary,
+.chat-form button {
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.button-primary:hover,
+.header-cta:hover,
+.chat-form button:hover:not(:disabled) {
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--ink) 18%, transparent);
+}
 
 /* Shared reveal rhythm: the same cadence is used on every major content group. */
-.scroll-reveal > .section-heading, .scroll-reveal > .service-grid,
-.scroll-reveal > .process-grid, .scroll-reveal > .faq-list { animation: entry .7s both; }
-.scroll-reveal > .service-grid { animation-delay: .08s; }
-.scroll-reveal > .process-grid, .scroll-reveal > .faq-list { animation-delay: .1s; }
-.service-card, .process-card { transition: border-color .25s ease, transform .25s ease, background-color .25s ease; }
-.service-card:hover, .process-card:hover { transform: translateY(-4px); }
-.service-card > a { transition: transform .25s ease, color .2s ease; }
-.service-card:hover > a, .service-card > a:focus-visible { transform: translate(3px, -3px); }
+.scroll-reveal > .section-heading,
+.scroll-reveal > .service-grid,
+.scroll-reveal > .process-grid,
+.scroll-reveal > .faq-list {
+  animation: entry 0.7s both;
+}
+.scroll-reveal > .service-grid {
+  animation-delay: 0.08s;
+}
+.scroll-reveal > .process-grid,
+.scroll-reveal > .faq-list {
+  animation-delay: 0.1s;
+}
+.service-card,
+.process-card {
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    background-color 0.25s ease;
+}
+.service-card:hover,
+.process-card:hover {
+  transform: translateY(-4px);
+}
+.service-card > a {
+  transition:
+    transform 0.25s ease,
+    color 0.2s ease;
+}
+.service-card:hover > a,
+.service-card > a:focus-visible {
+  transform: translate(3px, -3px);
+}
 
 /* Process is a sequence, not three disconnected cards. */
-.process-card { position: relative; }
-.process-card:not(:last-child)::after { content: "→"; position: absolute; right: -10px; top: 24px; z-index: 1; color: var(--cyan); background: var(--bg); padding: 0 5px; font-size: 1rem; }
-.process-card h3 { letter-spacing: -.045em; }
+.process-card {
+  position: relative;
+}
+.process-card:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -10px;
+  top: 24px;
+  z-index: 1;
+  color: var(--cyan);
+  background: var(--bg);
+  padding: 0 5px;
+  font-size: 1rem;
+}
+.process-card h3 {
+  letter-spacing: -0.045em;
+}
 
 /* FAQ state is explicit and quiet; the plus becomes a close mark. */
-details summary span { display: inline-block; transition: transform .25s ease; }
-details[open] summary span { transform: rotate(45deg); }
-details[open] p { animation: entry .3s ease both; }
+details summary span {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+details[open] summary span {
+  transform: rotate(45deg);
+}
+details[open] p {
+  animation: entry 0.3s ease both;
+}
 
 /* CTA links have a purposeful draw-on underline rather than a generic color jump. */
-.cursor-contact-cta { position: relative; border-bottom: 0; }
-.cursor-contact-cta::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform-origin: left; transition: transform .3s ease; }
-.cursor-contact-cta:hover::after, .cursor-contact-cta:focus-visible::after { transform: scaleX(.55); transform-origin: right; }
-.cursor-contact-socials a { transition: color .2s ease, transform .2s ease; }
-.cursor-contact-socials a:hover { transform: translateY(-2px); }
+.cursor-contact-cta {
+  position: relative;
+  border-bottom: 0;
+}
+.cursor-contact-cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.cursor-contact-cta:hover::after,
+.cursor-contact-cta:focus-visible::after {
+  transform: scaleX(0.55);
+  transform-origin: right;
+}
+.cursor-contact-socials a {
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+.cursor-contact-socials a:hover {
+  transform: translateY(-2px);
+}
 
 /* Forms share the same deliberate rhythm as the home-page controls. */
-.contact-diagnostic form { border-radius: var(--radius-md); box-shadow: var(--shadow-soft); }
-.contact-diagnostic input, .contact-diagnostic textarea { transition: border-color .2s ease, background-color .2s ease; }
-.contact-diagnostic input:focus, .contact-diagnostic textarea:focus { background: color-mix(in srgb, var(--blue) 4%, transparent); }
+.contact-diagnostic form {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+.contact-diagnostic input,
+.contact-diagnostic textarea {
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+.contact-diagnostic input:focus,
+.contact-diagnostic textarea:focus {
+  background: color-mix(in srgb, var(--blue) 4%, transparent);
+}
 
 @media (max-width: 800px) {
-  .site-header { padding: 16px 0; }
-  .process-card:not(:last-child)::after { content: "↓"; right: 10px; top: auto; bottom: -10px; }
+  .site-header {
+    padding: 16px 0;
+  }
+  .process-card:not(:last-child)::after {
+    content: "↓";
+    right: 10px;
+    top: auto;
+    bottom: -10px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .service-card:hover, .process-card:hover, .cursor-contact-socials a:hover { transform: none; }
-  .process-card:not(:last-child)::after { transition: none; }
+  .service-card:hover,
+  .process-card:hover,
+  .cursor-contact-socials a:hover {
+    transform: none;
+  }
+  .process-card:not(:last-child)::after {
+    transition: none;
+  }
 }

@@ -17,8 +17,13 @@ const securityHeaders = {
 };
 const withSecurityHeaders = (response: Response) => {
   const headers = new Headers(response.headers);
-  for (const [key, value] of Object.entries(securityHeaders)) headers.set(key, value);
-  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+  for (const [key, value] of Object.entries(securityHeaders))
+    headers.set(key, value);
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
 };
 
 const freePort =
@@ -36,13 +41,18 @@ for (let attempt = 1; ; attempt++) {
       hostname: HOST,
       async fetch(req) {
         const { pathname } = new URL(req.url);
-        if (pathname === "/api/chat") return withSecurityHeaders(await chatResponse(req));
-        if (pathname === "/api/contact") return withSecurityHeaders(await contactResponse(req));
+        if (pathname === "/api/chat")
+          return withSecurityHeaders(await chatResponse(req));
+        if (pathname === "/api/contact")
+          return withSecurityHeaders(await contactResponse(req));
         if (pathname !== "/") {
           const file = Bun.file(CLIENT_DIR + pathname);
-          if (await file.exists()) return withSecurityHeaders(new Response(file));
+          if (await file.exists())
+            return withSecurityHeaders(new Response(file));
         }
-        const response = await (handler as { fetch: (r: Request) => Response | Promise<Response> }).fetch(req);
+        const response = await (
+          handler as { fetch: (r: Request) => Response | Promise<Response> }
+        ).fetch(req);
         return withSecurityHeaders(response);
       },
     });
